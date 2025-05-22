@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Employee>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Employees</h1>
+@if (Model.Any())
+{
+    <a asp-action="Create" class="btn btn-primary">Create Employee</a>
+
+    <table class="table table-bordered">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(x => x.Name)
+            </td>
+            <td>
+                @Html.DisplayNameFor(x => x.Salary)
+            </td>
+            <td>Operations</td>
+        </tr>
+
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.Salary</td>
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@emp.EmployeeId"
+                       class="btn btn-secondary"> More Details </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}
+else 
+{
+<div class="alert alert-warning">
+    No Employees in this list,
+    <a asp-action="Create" class="btn btn-primary">Create</a>
+</div>
+}
+
+
