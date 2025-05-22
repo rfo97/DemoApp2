@@ -29,6 +29,14 @@
                     <a asp-action="Details"
                        asp-route-id="@emp.EmployeeId"
                        class="btn btn-secondary"> More Details </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@emp.EmployeeId"
+                       class="btn btn-warning"> Edit </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@emp.EmployeeId"
+                       class="btn btn-danger"> Remove </a>
                 </td>
             </tr>
         }
@@ -36,12 +44,12 @@
     </table>
 
 }
-else 
+else
 {
 <div class="alert alert-warning">
     No Employees in this list,
     <a asp-action="Create" class="btn btn-primary">Create</a>
 </div>
-}
 
+}
 
