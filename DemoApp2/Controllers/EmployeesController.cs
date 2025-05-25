@@ -113,5 +113,22 @@ namespace DemoApp2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult RestoreEmployees()
+        {
+            return View(db.Employees.Where(x => x.IsDeleted == true)
+                           .OrderByDescending(m => m.HDate));
+        }
+
+        public IActionResult ConfirmRestore(int? id) 
+        {
+            var data = db.Employees.Find(id);
+            if (data != null)
+            {
+                data.IsDeleted = false;
+                db.SaveChanges();
+                return RedirectToAction(nameof(RestoreEmployees));
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

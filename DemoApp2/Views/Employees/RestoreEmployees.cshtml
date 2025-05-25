@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Employee>
+@{
+    ViewData["Title"] = "Restore Employees";
+}
+
+
+<h1>Employees</h1>
+
+
+    <table class="table table-bordered">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(x => x.Name)
+            </td>
+            <td>
+                @Html.DisplayNameFor(x => x.Salary)
+            </td>
+            <td>Operations</td>
+        </tr>
+
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.Salary</td>
+                <td>
+                    
+
+                    <a asp-action="ConfirmRestore"
+                       asp-route-id="@emp.EmployeeId"
+                       class="btn btn-danger"> Restore </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
