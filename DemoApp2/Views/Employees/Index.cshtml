@@ -8,6 +8,9 @@
 @if (Model.Any())
 {
     <a asp-action="Create" class="btn btn-primary">Create Employee</a>
+  
+    <a asp-action="RestorEmployees" class="btn btn-secondary">Restor Employees</a>
+
 
     <table class="table table-bordered">
         <tr>
@@ -37,6 +40,10 @@
                     <a asp-action="Delete"
                        asp-route-id="@emp.EmployeeId"
                        class="btn btn-danger"> Remove </a>
+
+                    <a asp-action="SoftDelete"
+                       asp-route-id="@emp.EmployeeId"
+                       class="btn btn-danger"> Soft Delete </a>
                 </td>
             </tr>
         }

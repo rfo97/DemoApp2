@@ -14,7 +14,8 @@ namespace DemoApp2.Controllers
 
         public IActionResult Index()
         {
-            return View(db.Employees);
+            return View(db.Employees.Where(x => x.IsDeleted == false)
+                .OrderByDescending(m => m.HDate));
         }
 
         [HttpGet]
@@ -23,7 +24,7 @@ namespace DemoApp2.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Employee employee) 
+        public IActionResult Create(Employee employee)
         {
             employee.IsActive = true;
             // Save Data
@@ -34,19 +35,83 @@ namespace DemoApp2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id) 
+        public IActionResult Details(int? id)
         {
-            if (id==null)
+            if (id == null)
             {
                 return RedirectToAction(nameof(Index));
             }
             var empData = db.Employees.Find(id);
-            if (empData != null) 
+            if (empData != null)
             {
                 return View(empData);
 
             }
             return RedirectToAction(nameof(Index));
         }
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            var empData = db.Employees.Find(id);
+            if (empData != null)
+            {
+                return View(empData);
+
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        public IActionResult Edit(Employee employee)
+        {
+            db.Employees.Update(employee);
+            db.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int? id) {
+            if (id ==null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            var data=db.Employees.Find(id);
+            if (data==null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmDelete(Employee employee) 
+        {
+            var data = db.Employees.Find(employee.EmployeeId);
+            if (data!=null)
+            {
+                db.Employees.Remove(data);
+                db.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+        
+        }
+
+        public IActionResult SoftDelete(int? id) 
+        {
+            
+            var data= db.Employees.Find(id);
+            if (data != null) {
+                data.IsDeleted = true;
+                db.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
