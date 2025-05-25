@@ -1,4 +1,6 @@
-﻿namespace DemoApp2.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DemoApp2.Models
 {
     public class Employee
     {
@@ -10,5 +12,10 @@
 
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
+
+        [ForeignKey("Department")]
+        public int DepartmentId { get; set; }
+        public Department? Department { get; set; }
+
     }
 }

@@ -1,6 +1,8 @@
 ﻿using DemoApp2.Data;
 using DemoApp2.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace DemoApp2.Controllers
 {
@@ -14,13 +16,21 @@ namespace DemoApp2.Controllers
 
         public IActionResult Index()
         {
-            return View(db.Employees.Where(x => x.IsDeleted == false)
-                .OrderByDescending(m => m.HDate));
+
+            if (db.Departments.Count() > 0)
+            {
+                ViewBag.Deleted = db.Employees.Where(x => x.IsDeleted == true).Count();
+                return View(db.Employees.Where(x => x.IsDeleted == false)
+                    .Include(m=>m.Department)
+                    .OrderByDescending(m => m.HDate));
+            }
+            return RedirectToAction("Index", "Departments");
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.allDepts = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
             return View();
         }
         [HttpPost]
@@ -44,6 +54,7 @@ namespace DemoApp2.Controllers
             var empData = db.Employees.Find(id);
             if (empData != null)
             {
+                string fName, lName;
                 return View(empData);
 
             }
@@ -74,13 +85,14 @@ namespace DemoApp2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id) {
-            if (id ==null)
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
             {
                 return RedirectToAction(nameof(Index));
             }
-            var data=db.Employees.Find(id);
-            if (data==null)
+            var data = db.Employees.Find(id);
+            if (data == null)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -88,24 +100,25 @@ namespace DemoApp2.Controllers
         }
 
         [HttpPost]
-        public IActionResult ConfirmDelete(Employee employee) 
+        public IActionResult ConfirmDelete(Employee employee)
         {
             var data = db.Employees.Find(employee.EmployeeId);
-            if (data!=null)
+            if (data != null)
             {
                 db.Employees.Remove(data);
                 db.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
-        
+
         }
 
-        public IActionResult SoftDelete(int? id) 
+        public IActionResult SoftDelete(int? id)
         {
-            
-            var data= db.Employees.Find(id);
-            if (data != null) {
+
+            var data = db.Employees.Find(id);
+            if (data != null)
+            {
                 data.IsDeleted = true;
                 db.SaveChanges();
                 return RedirectToAction(nameof(Index));
@@ -115,11 +128,17 @@ namespace DemoApp2.Controllers
 
         public IActionResult RestoreEmployees()
         {
-            return View(db.Employees.Where(x => x.IsDeleted == true)
-                           .OrderByDescending(m => m.HDate));
+            var data = db.Employees.Where(x => x.IsDeleted == true)
+                           .OrderByDescending(m => m.HDate);
+            if (data.Any())
+            {
+                return View(data);
+            }
+            return RedirectToAction(nameof(Index));
+
         }
 
-        public IActionResult ConfirmRestore(int? id) 
+        public IActionResult ConfirmRestore(int? id)
         {
             var data = db.Employees.Find(id);
             if (data != null)

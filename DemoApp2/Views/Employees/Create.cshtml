@@ -22,6 +22,14 @@
             <td> <input asp-for="HDate" class="form-control" /> </td>
         </tr>
         <tr>
+            <td> <label asp-for="DepartmentId"></label> </td>
+            <td>
+                <select asp-for="DepartmentId" asp-items="ViewBag.allDepts" class="form-control">
+                <option value="-1"> --- Select Department ----</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2">
                 <input type="submit" value="Save" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-primary">Cancel</a>

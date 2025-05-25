@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Department>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Departments</h1>
+@if (Model.Any())
+{
+    <a asp-action="Create" class="btn btn-primary">Create Department</a>
+  
+    <table class="table table-bordered">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(x => x.DepartmentName)
+            </td>
+            
+            <td>Operations</td>
+        </tr>
+
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.DepartmentName</td>
+              
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@emp.DepartmentId"
+                       class="btn btn-secondary"> More Details </a>
+
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        No Departments in this list,
+        <a asp-action="Create" class="btn btn-primary">Create</a>
+    </div>
+
+}
+

@@ -1,0 +1,22 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>Create</h1>
+<form asp-action="Create" method="post">
+    <table class="table table-bordered">
+        <tr>
+            <td> <label asp-for="DepartmentName"></label> </td>
+            <td> <input asp-for="DepartmentName" class="form-control" /> </td>
+        </tr>
+       
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Save" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-primary">Cancel</a>
+            </td>
+        </tr>
+    </table>
+</form>
