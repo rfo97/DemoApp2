@@ -26,9 +26,31 @@ namespace DemoApp2.Controllers
         [HttpPost]
         public IActionResult Create(Department department)
         {
-            db.Departments.Add(department);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                if (!DepartmentEx(department.DepartmentName))
+                {
+                    db.Departments.Add(department);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("DepartmentName", "Exist");
+                return View(department);
+
+
+            }
+            return View(department);
+
+        }
+
+        public bool DepartmentEx(string deptName)
+        {
+            if (db.Departments.Where(x => x.DepartmentName == deptName).Any())
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

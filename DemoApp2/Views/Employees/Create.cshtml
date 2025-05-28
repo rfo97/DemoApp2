@@ -8,25 +8,38 @@
     <table class="table table-bordered">
         <tr>
             <td> <label asp-for="Name"></label> </td>
-            <td> <input asp-for="Name" class="form-control" /> </td>
+            <td>
+                <input asp-for="Name" class="form-control" />
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </td>
         </tr>
         <tr>
             <td> <label asp-for="Email"></label> </td>
-            <td> <input asp-for="Email" class="form-control" /> </td>
+            <td>
+                <input asp-for="Email" class="form-control" />
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </td>
         </tr>
         <tr>
             <td> <label asp-for="Salary"></label> </td>
-            <td> <input asp-for="Salary" class="form-control" /> </td>
+            <td>
+                <input asp-for="Salary" class="form-control" />
+                <span class="text-danger" asp-validation-for="Salary"></span>
+            </td>
         <tr>
             <td> <label asp-for="HDate"></label> </td>
-            <td> <input asp-for="HDate" class="form-control" /> </td>
+            <td>
+                <input asp-for="HDate" class="form-control" />
+                <span class="text-danger" asp-validation-for="HDate"></span>
+            </td>
         </tr>
         <tr>
             <td> <label asp-for="DepartmentId"></label> </td>
             <td>
                 <select asp-for="DepartmentId" asp-items="ViewBag.allDepts" class="form-control">
-                <option value="-1"> --- Select Department ----</option>
+                    <option value="-1"> --- Select Department ----</option>
                 </select>
+                <span class="text-danger" asp-validation-for="DepartmentId"></span>
             </td>
         </tr>
         <tr>

@@ -1,0 +1,25 @@
+﻿@model User
+@{
+    ViewData["Title"] = "CreateUser";
+}
+
+<h1>Create User</h1>
+
+<form asp-action="CreateUser" method="post">
+    <table class="table table-bordered">
+        <tr>
+            <td> <label asp-for="UserName"></label> </td>
+            <td>
+                <input asp-for="UserName" class="form-control" />
+                <span class="text-danger" asp-validation-for="UserName"></span>
+            </td>
+        </tr>
+       
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Save" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-primary">Cancel</a>
+            </td>
+        </tr>
+    </table>
+</form>

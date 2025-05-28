@@ -1,5 +1,6 @@
 ﻿using DemoApp2.Data;
 using DemoApp2.Models;
+using DemoApp2.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,8 @@ namespace DemoApp2.Controllers
 {
     public class EmployeesController : Controller
     {
+        #region Employees
+
         private AppDbContext db;
         public EmployeesController(AppDbContext _db)
         {
@@ -21,7 +24,7 @@ namespace DemoApp2.Controllers
             {
                 ViewBag.Deleted = db.Employees.Where(x => x.IsDeleted == true).Count();
                 return View(db.Employees.Where(x => x.IsDeleted == false)
-                    .Include(m=>m.Department)
+                    .Include(m => m.Department)
                     .OrderByDescending(m => m.HDate));
             }
             return RedirectToAction("Index", "Departments");
@@ -36,12 +39,20 @@ namespace DemoApp2.Controllers
         [HttpPost]
         public IActionResult Create(Employee employee)
         {
-            employee.IsActive = true;
-            // Save Data
-            db.Employees.Add(employee);
-            db.SaveChanges();
+            if (ModelState.IsValid)
+            {
 
-            return RedirectToAction(nameof(Index));
+                employee.IsActive = true;
+                // Save Data
+                db.Employees.Add(employee);
+                db.SaveChanges();
+
+                return RedirectToAction(nameof(Index));
+            }
+            ViewBag.allDepts = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
+            return View(employee);
+
+
         }
 
         [HttpGet]
@@ -149,5 +160,46 @@ namespace DemoApp2.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        #endregion
+
+        #region Users
+        [HttpGet]
+        public IActionResult CreateUser()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateUser(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
+
+
+        }
+
+
+        public IActionResult AllData()
+        {
+            UserEmployeeViewModel model = new UserEmployeeViewModel
+            {
+            Employees=db.Employees.ToList(),
+            Users=db.Users.ToList()
+            };
+            return View(model);
+        }
+
+
+        #endregion
+
+
+
     }
 }
