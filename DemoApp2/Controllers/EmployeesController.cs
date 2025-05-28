@@ -190,9 +190,10 @@ namespace DemoApp2.Controllers
         {
             UserEmployeeViewModel model = new UserEmployeeViewModel
             {
-            Employees=db.Employees.ToList(),
-            Users=db.Users.ToList()
+                Employees = db.Employees.ToList(),
+                Users = db.Users.ToList()
             };
+            ViewBag.depts = db.Departments;
             return View(model);
         }
 

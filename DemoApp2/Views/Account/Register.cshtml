@@ -1,0 +1,80 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+<div class="text-danger" asp-validation-summary="All"></div>
+<table class="table table-bordered">
+    <tr>
+        <td> <label asp-for="UserName"></label> </td>
+        <td>
+            <input asp-for="UserName" class="form-control" />
+            <span class="text-danger" asp-validation-for="UserName"></span>
+        </td>
+    </tr>
+    <tr>
+        <td> <label asp-for="Password"></label> </td>
+        <td>
+            <input asp-for="Password" class="form-control" />
+            <span class="text-danger" asp-validation-for="Password"></span>
+        </td>
+    </tr>
+    <tr>
+        <td> <label asp-for="ConfirmPassword"></label> </td>
+        <td>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+        </td>
+    </tr>
+    <tr>
+        <td> <label asp-for="Email"></label> </td>
+        <td>
+            <input asp-for="Email" class="form-control" />
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </td>
+    </tr>
+
+    <tr>
+        <td> <label asp-for="ConfirmEmail"></label> </td>
+        <td>
+            <input asp-for="ConfirmEmail" class="form-control" />
+            <span class="text-danger" asp-validation-for="ConfirmEmail"></span>
+        </td>
+    </tr>
+
+    <tr>
+        <td> <label asp-for="Gender"></label> </td>
+        <td>
+            <select asp-for="Gender"
+                    asp-items="@Html.GetEnumSelectList<DemoApp2.Models.User.Genders>()"
+                    class="form-control">
+            </select>
+            <span class="text-danger" asp-validation-for="Gender"></span>
+        </td>
+    </tr>
+    <tr>
+        <td> <label asp-for="Role.RoleName"></label> </td>
+        <td>
+            <select asp-for="RoleId"
+                    asp-items="@ViewBag.Roles"
+                    class="form-control">
+            </select>
+            <span class="text-danger" asp-validation-for="RoleId"></span>
+        </td>
+    </tr>
+    <tr>
+        <td> <label asp-for="IsActive"></label> </td>
+        <td>
+           <input asp-for="IsActive" class="form-check-input" /> Is Active
+            <span class="text-danger" asp-validation-for="IsActive"></span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <input type="submit" value="Register" class="btn btn-primary" />
+            <a asp-action="Login" >I Have account</a>
+        </td>
+    </tr>
+
+</table>

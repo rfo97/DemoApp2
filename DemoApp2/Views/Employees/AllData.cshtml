@@ -1,4 +1,4 @@
-﻿@model  UserEmployeeViewModel
+﻿@model UserEmployeeViewModel
 @{
     ViewData["Title"] = "AllData";
 }
@@ -7,7 +7,7 @@
 <table class="table table-bordered">
     <tr>
         <td>
-           @Html.DisplayNameFor(x=>x.Employees.First().Name)
+            @Html.DisplayNameFor(x => x.Employees.First().Name)
         </td>
         <td>
             @Html.DisplayNameFor(x => x.Employees.First().Email)
@@ -35,6 +35,23 @@
     {
         <tr>
             <td> @emp.UserName </td>
+        </tr>
+    }
+</table>
+
+<h1>Departments</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <td>
+           Name
+        </td>
+    </tr>
+
+    @foreach (var emp in ViewBag.depts)
+    {
+        <tr>
+            <td> @emp.DepartmentName </td>
         </tr>
     }
 </table>
