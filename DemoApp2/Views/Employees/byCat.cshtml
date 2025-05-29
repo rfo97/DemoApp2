@@ -1,0 +1,25 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Employee Count by Department";
+}
+
+<h2>Employee Count by Department</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Department</th>
+            <th>Employee Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Department</td>
+                <td>@item.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,4 +1,6 @@
 ﻿using DemoApp2.Data;
+using DemoApp2.Models;
+using DemoApp2.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -18,6 +20,30 @@ namespace DemoApp2.Controllers
         {
             ViewBag.Roles = new SelectList(db.Role, "RoleId", "RoleName");
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = new User
+                {
+                    Email = model.Email,
+                    City = "Kuwait",
+                    Gender = model.Gender,
+                    RoleId = model.RoleId,
+                    Password = model.Password,
+                    UserName = model.UserName,
+                    IsActive = model.IsActive
+                };
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Login");
+            }
+            ViewBag.Roles = new SelectList(db.Role, "RoleId", "RoleName");
+            return View(model);
+
         }
 
 

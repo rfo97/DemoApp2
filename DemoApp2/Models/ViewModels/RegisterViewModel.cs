@@ -31,6 +31,6 @@ namespace DemoApp2.Models.ViewModels
 
         [ForeignKey("Role")]
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public Role? Role { get; set; }
     }
 }
