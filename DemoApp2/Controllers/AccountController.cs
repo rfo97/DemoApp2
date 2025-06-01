@@ -11,7 +11,7 @@ namespace DemoApp2.Controllers
 
         private AppDbContext db;
         public AccountController(AppDbContext _db)
-        {
+        {//Raghad 
             db = _db;
         }
 
