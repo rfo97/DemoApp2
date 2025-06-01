@@ -23,8 +23,6 @@ namespace DemoApp2.Models
         public int RoleId { get; set; }
         public Role? Role { get; set; }
 
-
-
         public enum Genders { Male,Female}
     }
 }

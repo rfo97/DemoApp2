@@ -46,6 +46,36 @@ namespace DemoApp2.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
 
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var chkUser = db.Users.Where
+                    (x => x.UserName == model.UserName && x.Password == model.Password);
+
+                if (chkUser.Any()) 
+                {
+                    if (chkUser.First().RoleId==1)
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Administrator" });
+
+                    }
+                    return RedirectToAction("Index", "Home", new { area = "User" });
+
+                }
+
+                return View(model);
+            }
+            return View(model);
+        }
     }
 }
